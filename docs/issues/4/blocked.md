@@ -1,4 +1,1 @@
-Coding Agent failed delivery validation.
-
-Error:
-Import delivery gate failed: missing sample CSV/XLSX file
+Testing gate did not pass. Conclusion: FAIL. See test-report.md.
