@@ -1,0 +1,44 @@
+name: Feature Request
+description: 提交一个产品需求给多 Agent 系统处理
+title: "[Feature] "
+labels: ["stage:intake", "priority:p2"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 需求背景
+      description: 为什么要做这个功能？
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目标
+      description: 这个功能最终要解决什么问题？
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 功能范围
+      description: 包含什么？不包含什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: 约束条件
+      description: 技术、时间、成本、平台、性能、安全等限制
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      description: 做到什么程度算完成？
+    validations:
+      required: false
