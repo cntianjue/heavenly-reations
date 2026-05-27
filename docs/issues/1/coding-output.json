@@ -1,109 +1,37 @@
- ```json
 {
-  "project_name": "简易计算器模块",
-  "description": "为了满足用户对基础四则运算的需求，我们计划开发一个简易计算器模块。该模块将支持基本的加法、减法、乘法和除法操作，并提供清空功能和异常处理。",
-  "target_users": "需要进行简单数学计算的个人或学生",
-  "user_stories": [
+  "summary": "Implement a minimal frontend calculator module with add, subtract, multiply, divide, clear, and divide-by-zero handling.",
+  "files": [
     {
-      "title": "输入两个数字并选择一个运算符",
-      "description": "用户能够输入第一个数字，选择一个运算符（+、-、×、÷），然后输入第二个数字。"
+      "path": "index.html",
+      "content": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Simple Calculator</title>\n  <link rel=\"stylesheet\" href=\"src/calculator.css\">\n</head>\n<body>\n  <main class=\"calculator\">\n    <h1>Simple Calculator</h1>\n\n    <label for=\"firstNumber\">First number</label>\n    <input id=\"firstNumber\" type=\"number\" step=\"any\" placeholder=\"Enter first number\">\n\n    <label for=\"operator\">Operator</label>\n    <select id=\"operator\">\n      <option value=\"add\">+</option>\n      <option value=\"subtract\">-</option>\n      <option value=\"multiply\">*</option>\n      <option value=\"divide\">/</option>\n    </select>\n\n    <label for=\"secondNumber\">Second number</label>\n    <input id=\"secondNumber\" type=\"number\" step=\"any\" placeholder=\"Enter second number\">\n\n    <div class=\"actions\">\n      <button id=\"calculateBtn\" type=\"button\">Calculate</button>\n      <button id=\"clearBtn\" type=\"button\">Clear</button>\n    </div>\n\n    <section class=\"result-panel\" aria-live=\"polite\">\n      <p id=\"result\">Result: --</p>\n      <p id=\"error\" class=\"error\"></p>\n    </section>\n  </main>\n\n  <script src=\"src/calculator.js\"></script>\n</body>\n</html>\n"
     },
     {
-      "title": "点击等号后返回计算结果",
-      "description": "用户点击等号按钮后，系统返回正确的计算结果。"
+      "path": "src/calculator.js",
+      "content": "function calculate(firstNumber, secondNumber, operator) {\n  switch (operator) {\n    case 'add':\n      return firstNumber + secondNumber;\n    case 'subtract':\n      return firstNumber - secondNumber;\n    case 'multiply':\n      return firstNumber * secondNumber;\n    case 'divide':\n      if (secondNumber === 0) {\n        throw new Error('Cannot divide by zero');\n      }\n      return firstNumber / secondNumber;\n    default:\n      throw new Error('Unsupported operator');\n  }\n}\n\nfunction readNumber(inputId) {\n  const value = document.getElementById(inputId).value;\n\n  if (value === '') {\n    throw new Error('Please enter both numbers');\n  }\n\n  const number = Number(value);\n\n  if (Number.isNaN(number)) {\n    throw new Error('Please enter valid numbers');\n  }\n\n  return number;\n}\n\nfunction showResult(result) {\n  document.getElementById('result').textContent = 'Result: ' + result;\n  document.getElementById('error').textContent = '';\n}\n\nfunction showError(message) {\n  document.getElementById('result').textContent = 'Result: --';\n  document.getElementById('error').textContent = message;\n}\n\nfunction handleCalculate() {\n  try {\n    const firstNumber = readNumber('firstNumber');\n    const secondNumber = readNumber('secondNumber');\n    const operator = document.getElementById('operator').value;\n    const result = calculate(firstNumber, secondNumber, operator);\n\n    showResult(result);\n  } catch (error) {\n    showError(error.message);\n  }\n}\n\nfunction handleClear() {\n  document.getElementById('firstNumber').value = '';\n  document.getElementById('secondNumber').value = '';\n  document.getElementById('operator').value = 'add';\n  document.getElementById('result').textContent = 'Result: --';\n  document.getElementById('error').textContent = '';\n}\n\nif (typeof document !== 'undefined') {\n  document.getElementById('calculateBtn').addEventListener('click', handleCalculate);\n  document.getElementById('clearBtn').addEventListener('click', handleClear);\n}\n\nif (typeof module !== 'undefined') {\n  module.exports = {\n    calculate\n  };\n}\n"
     },
     {
-      "title": "清空当前输入和结果显示",
-      "description": "用户点击清空按钮后，所有输入内容和结果显示恢复为初始状态。"
+      "path": "src/calculator.css",
+      "content": "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  min-height: 100vh;\n  font-family: Arial, sans-serif;\n  background: #f5f5f5;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.calculator {\n  width: 360px;\n  padding: 24px;\n  background: #ffffff;\n  border-radius: 12px;\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);\n}\n\nh1 {\n  margin-top: 0;\n  text-align: center;\n}\n\nlabel {\n  display: block;\n  margin-top: 12px;\n  font-weight: 600;\n}\n\ninput,\nselect,\nbutton {\n  width: 100%;\n  margin-top: 6px;\n  padding: 10px;\n  font-size: 16px;\n}\n\n.actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 16px;\n}\n\n.actions button {\n  width: 50%;\n  cursor: pointer;\n}\n\n.result-panel {\n  margin-top: 16px;\n  padding: 12px;\n  background: #f0f0f0;\n  border-radius: 8px;\n}\n\n.error {\n  color: #c00000;\n  min-height: 20px;\n}\n"
     },
     {
-      "title": "处理除数为零的情况",
-      "description": "如果用户尝试用零作为除数，系统提示“不能除以 0”或返回错误信息。"
+      "path": "tests/calculator.test.js",
+      "content": "const { calculate } = require('../src/calculator');\n\nfunction assertEqual(actual, expected, message) {\n  if (actual !== expected) {\n    throw new Error(message + '. Expected ' + expected + ', got ' + actual);\n  }\n}\n\nfunction assertThrows(fn, expectedMessage, message) {\n  try {\n    fn();\n  } catch (error) {\n    if (error.message !== expectedMessage) {\n      throw new Error(message + '. Expected error message \"' + expectedMessage + '\", got \"' + error.message + '\"');\n    }\n    return;\n  }\n\n  throw new Error(message + '. Expected function to throw');\n}\n\nassertEqual(calculate(1, 2, 'add'), 3, 'addition should work');\nassertEqual(calculate(5, 3, 'subtract'), 2, 'subtraction should work');\nassertEqual(calculate(4, 3, 'multiply'), 12, 'multiplication should work');\nassertEqual(calculate(8, 2, 'divide'), 4, 'division should work');\n\nassertThrows(\n  function () {\n    calculate(8, 0, 'divide');\n  },\n  'Cannot divide by zero',\n  'divide by zero should throw'\n);\n\nconsole.log('calculator tests passed');\n"
+    },
+    {
+      "path": "package.json",
+      "content": "{\n  \"scripts\": {\n    \"test\": \"node tests/calculator.test.js\"\n  },\n  \"devDependencies\": {}\n}\n"
+    },
+    {
+      "path": "README-calculator.md",
+      "content": "# Simple Calculator\n\nThis is a minimal frontend calculator module.\n\n## Features\n\n- Addition\n- Subtraction\n- Multiplication\n- Division\n- Clear/reset\n- Divide-by-zero validation\n\n## Run\n\nOpen index.html in a browser.\n\n## Test\n\nRun:\n\nnpm test\n\n## Scope\n\nThis MVP does not include backend APIs, database storage, history, or scientific calculator features.\n"
     }
   ],
-  "functional_requirements": [
-    {
-      "type": "Must Have",
-      "details": [
-        "支持加法、减法、乘法和除法运算。",
-        "用户可以选择 +、-、×、÷ 四种运算符。",
-        "点击等号后返回计算结果。",
-        "点击清空按钮后，输入内容和结果显示恢复为初始状态。",
-        "处理除数为零的情况，并提示用户。"
-      ]
-    },
-    {
-      "type": "Should Have",
-      "details": [
-        "提供一个简单的页面或后端接口来实现计算器功能。"
-      ]
-    }
+  "commands": [
+    "npm test"
   ],
-  "non_functional_requirements": [
-    {
-      "type": "Performance",
-      "description": "计算器应快速响应用户的操作。"
-    },
-    {
-      "type": "Security",
-      "description": "确保用户输入的安全性，避免恶意输入导致的错误或安全问题。"
-    },
-    {
-      "type": "Logging",
-      "description": "记录关键操作日志，便于后续排查问题。"
-    },
-    {
-      "type": "Compatibility",
-      "description": "支持主流浏览器和操作系统。"
-    },
-    {
-      "type": "Maintainability",
-      "description": "代码结构清晰，易于后期修改和扩展。"
-    }
-  ],
-  "acceptance_criteria": [
-    {
-      "description": "用户可以输入数字并选择运算符。",
-      "test_steps": [
-        "输入两个数字并选择一个运算符。",
-        "点击等号按钮。"
-      ]
-    },
-    {
-      "description": "点击等号后返回正确的计算结果。",
-      "test_steps": [
-        "输入两个数字并选择一个运算符。",
-        "点击等号按钮，检查结果显示是否正确。"
-      ]
-    },
-    {
-      "description": "点击清空按钮后，输入内容和结果显示恢复为初始状态。",
-      "test_steps": [
-        "输入两个数字并选择一个运算符。",
-        "点击清空按钮，检查输入内容和结果显示是否恢复为初始状态。"
-      ]
-    },
-    {
-      "description": "输入除数为零时，系统提示“不能除以 0”或返回错误信息。",
-      "test_steps": [
-        "输入两个数字并选择一个除法运算符，其中一个数字为零。",
-        "点击等号按钮，检查是否显示“不能除以 0”的提示。"
-      ]
-    }
-  ],
-  "user_confirmation_questions": [
-    {
-      "question": "是否需要提供一个简单的页面来展示计算器？",
-      "options": ["是", "否"]
-    },
-    {
-      "question": "是否需要支持历史记录功能？",
-      "options": ["是", "否"]
-    },
-    {
-      "question": "是否需要增加科学计算模式？",
-      "options": ["是", "否"]
-    }
+  "notes": [
+    "This implementation is frontend-only.",
+    "The generated package.json only contains a test script.",
+    "README-calculator.md is used instead of overwriting an existing README.md."
   ]
 }
-```

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Calculator</title>
+  <link rel="stylesheet" href="src/calculator.css">
+</head>
+<body>
+  <main class="calculator">
+    <h1>Simple Calculator</h1>
+
+    <label for="firstNumber">First number</label>
+    <input id="firstNumber" type="number" step="any" placeholder="Enter first number">
+
+    <label for="operator">Operator</label>
+    <select id="operator">
+      <option value="add">+</option>
+      <option value="subtract">-</option>
+      <option value="multiply">*</option>
+      <option value="divide">/</option>
+    </select>
+
+    <label for="secondNumber">Second number</label>
+    <input id="secondNumber" type="number" step="any" placeholder="Enter second number">
+
+    <div class="actions">
+      <button id="calculateBtn" type="button">Calculate</button>
+      <button id="clearBtn" type="button">Clear</button>
+    </div>
+
+    <section class="result-panel" aria-live="polite">
+      <p id="result">Result: --</p>
+      <p id="error" class="error"></p>
+    </section>
+  </main>
+
+  <script src="src/calculator.js"></script>
+</body>
+</html>
