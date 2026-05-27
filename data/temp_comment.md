@@ -1,1 +1,7 @@
-已收到开发计划确认。下一阶段可以接入 Coding / Testing / Review / DevOps Agent。
+## Review Agent 已完成代码审查
+
+产物：
+
+- `docs/issues/4/review-report.md`
+
+下一步进入 DevOps Agent。

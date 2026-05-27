@@ -1,0 +1,42 @@
+ ```json
+{
+  "issue": {
+    "title": "简单的图书管理系统2",
+    "body": "需求背景：我要做一个简单的图书管理系统，用于管理图书的基础信息和库存状态。当前只需要实现最小可用版本，方便后续测试 AI 自动生成代码、接口、数据库和测试用例的能力。\n\n目标：支持图书的新增、查询、修改、删除，以及简单的借出、归还操作。\n\n功能范围：后端接口即可，暂时不做前端。\n\n约束条件：\n- 后端使用 Java Spring Boot。\n- 数据库使用 MySQL。\n- 提供 REST API。\n- 图书编号或 ISBN 不能重复。\n- 图书库存不能小于 0。\n- 暂时不做用户登录和权限控制。\n\n验收标准：\n- 可以新增图书。\n- 可以查询图书列表。\n- 可以根据图书 ID 查询图书详情。\n- 可以修改图书信息。\n- 可以删除图书。\n- 可以借出图书，借出后库存数量减少 1。\n- 当库存为 0 时，借出失败。\n- 可以归还图书，归还后库存数量增加 1。\n- ISBN 重复时，新增失败。\n- 有基础测试用例。",
+    "status": "closed",
+    "resolution": "fixed",
+    "labels": ["backend", "java-spring-boot", "mysql", "rest-api"],
+    "milestone": "v1.0"
+  },
+  "coding_report": {
+    "conclusion": "PASS",
+    "branch": "agent/issue-4-v03",
+    "written_files": [
+      "pom.xml",
+      "docker-compose.yml",
+      "db/schema.sql",
+      "src/main/java/com/example/library/LibraryApplication.java",
+      "src/main/resources/application.properties",
+      "src/main/resources/application-dev.properties",
+      "src/test/resources/application-test.properties",
+      "src/main/java/com/example/library/entity/Book.java",
+      "src/main/java/com/example/library/entity/BorrowedBook.java",
+      "src/main/java/com/example/library/repository/BookRepository.java",
+      "src/main/java/com/example/library/repository/BorrowedBookRepository.java",
+      "src/main/java/com/example/library/service/BookService.java",
+      "src/main/java/com/example/library/service/BorrowService.java",
+      "src/main/java/com/example/library/controller/BookController.java",
+      "src/main/java/com/example/library/controller/BorrowController.java",
+      "src/main/java/com/example/library/exception/BookNotFoundException.java",
+      "src/main/java/com/example/library/exception/DuplicateIsbnException.java",
+      "src/main/java/com/example/library/exception/GlobalExceptionHandler.java",
+      "src/test/java/com/example/library/LibraryApplicationTests.java",
+      "src/test/java/com/example/library/service/BookServiceTest.java",
+      "src/test/java/com/example/library/service/BorrowServiceTest.java",
+      "src/test/java/com/example/library/controller/BookControllerIntegrationTest.java",
+      "README.md"
+    ],
+    "patch_id": "692580b1eb"
+  }
+}
+```
