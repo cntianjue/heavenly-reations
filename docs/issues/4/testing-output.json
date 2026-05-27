@@ -1,0 +1,9 @@
+{
+  "summary": "Testing Agent JSON failed. Fallback deterministic test gate will be used. Error: Missing required key: summary",
+  "files": [],
+  "commands": [],
+  "notes": [
+    "Fallback test gate was used because Testing Agent did not return valid JSON.",
+    "For Maven projects, compile/test/package/jar startup are verified."
+  ]
+}
