@@ -1,96 +1,37 @@
-### 用户故事
-
-1. **作为用户，我希望能够输入两个数字并选择一个运算符，以便得到正确的计算结果。**
-   - **验收标准**: 系统能够接收用户输入的两个数字和一个运算符，并返回相应的计算结果。
-   - **风险**: 输入格式不正确或运算符无效时无法处理。
-
-2. **作为用户，我希望能够在点击等号后看到计算结果。**
-   - **验收标准**: 用户点击等号按钮后，系统能够立即显示计算结果。
-   - **风险**: 计算结果显示不准确或延迟。
-
-3. **作为用户，我希望能够清空当前输入和结果。**
-   - **验收标准**: 用户点击清空按钮后，所有输入内容和结果显示恢复为初始状态。
-   - **风险**: 清空功能无法正确执行或导致数据丢失。
-
-4. **作为用户，我希望在除数为零时得到提示或错误信息。**
-   - **验收标准**: 当用户尝试进行除以零的操作时，系统能够显示“不能除以 0”或其他适当的错误信息。
-   - **风险**: 异常处理逻辑不完善或无法正确提示用户。
-
-### 功能范围
-
-#### Must Have
-- 支持加法、减法、乘法和除法运算。
-- 用户可以选择 +、-、×、÷ 四种运算符。
-- 点击等号后返回计算结果。
-- 点击清空按钮后，输入内容和结果显示恢复为初始状态。
-- 处理除数为零的情况，并提示用户。
-
-#### Should Have
-- 提供一个简单的页面或后端接口来实现计算器功能。
-
-#### Could Have
-- 增加历史记录功能。
-- 支持科学计算模式。
-
-#### Won't Have
-- 不支持复杂表达式和括号。
-- 不支持历史记录和科学计算功能。
-
-### 业务流程
-
-1. **用户输入第一个数字。**
-   - 用户在输入框中输入一个数字。
-
-2. **用户选择一个运算符（+、-、×、÷）。**
-   - 用户从按钮组中选择一个运算符。
-
-3. **用户输入第二个数字。**
-   - 用户在另一个输入框中输入第二个数字。
-
-4. **用户点击等号按钮，系统返回计算结果。**
-   - 用户点击等号按钮后，系统根据前两个数字和所选的运算符进行计算，并显示结果。
-
-5. **如果用户点击清空按钮，所有输入内容和结果显示恢复为初始状态。**
-   - 用户点击清空按钮后，所有输入框和结果显示区域恢复为空白。
-
-### 非功能需求
-
-- **性能**: 计算器应快速响应用户的操作。
-  - **风险**: 过于复杂的计算逻辑可能导致响应时间过长。
-
-- **安全**: 确保用户输入的安全性，避免恶意输入导致的错误或安全问题。
-  - **风险**: 用户可能输入无效字符或格式，导致系统异常。
-
-- **日志**: 记录关键操作日志，便于后续排查问题。
-  - **风险**: 日志记录不完整或被篡改。
-
-- **兼容性**: 支持主流浏览器和操作系统。
-  - **风险**: 不同平台的兼容性问题可能导致功能无法正常使用。
-
-- **可维护性**: 代码结构清晰，易于后期修改和扩展。
-  - **风险**: 代码过于复杂或设计不合理，导致维护困难。
-
-### 验收标准
-
-1. **用户可以输入数字并选择运算符。**
-   - 用户能够正确输入数字和选择运算符。
-
-2. **点击等号后返回正确的计算结果。**
-   - 计算结果显示准确无误。
-
-3. **点击清空按钮后，输入内容和结果显示恢复为初始状态。**
-   - 清空功能正常执行，所有输入内容和结果显示区域恢复为空白。
-
-4. **输入除数为零时，系统提示“不能除以 0”或返回错误信息。**
-   - 系统能够正确处理除数为零的情况，并显示相应的错误信息。
-
-### 需要用户确认的问题
-
-- 是否需要提供一个简单的页面来展示计算器？
-  - 用户界面设计与用户需求是否一致？
-
-- 是否需要支持历史记录功能？
-  - 历史记录功能是否对用户有实际价值？
-
-- 是否需要增加科学计算模式？
-  - 科学计算模式是否符合用户需求？
+{
+  "summary": "Implement a minimal frontend calculator module with add, subtract, multiply, divide, clear, and divide-by-zero handling.",
+  "files": [
+    {
+      "path": "index.html",
+      "content": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Simple Calculator</title>\n  <link rel=\"stylesheet\" href=\"src/calculator.css\">\n</head>\n<body>\n  <main class=\"calculator\">\n    <h1>Simple Calculator</h1>\n\n    <label for=\"firstNumber\">First number</label>\n    <input id=\"firstNumber\" type=\"number\" step=\"any\" placeholder=\"Enter first number\">\n\n    <label for=\"operator\">Operator</label>\n    <select id=\"operator\">\n      <option value=\"add\">+</option>\n      <option value=\"subtract\">-</option>\n      <option value=\"multiply\">*</option>\n      <option value=\"divide\">/</option>\n    </select>\n\n    <label for=\"secondNumber\">Second number</label>\n    <input id=\"secondNumber\" type=\"number\" step=\"any\" placeholder=\"Enter second number\">\n\n    <div class=\"actions\">\n      <button id=\"calculateBtn\" type=\"button\">Calculate</button>\n      <button id=\"clearBtn\" type=\"button\">Clear</button>\n    </div>\n\n    <section class=\"result-panel\" aria-live=\"polite\">\n      <p id=\"result\">Result: --</p>\n      <p id=\"error\" class=\"error\"></p>\n    </section>\n  </main>\n\n  <script src=\"src/calculator.js\"></script>\n</body>\n</html>\n"
+    },
+    {
+      "path": "src/calculator.js",
+      "content": "function calculate(firstNumber, secondNumber, operator) {\n  switch (operator) {\n    case 'add':\n      return firstNumber + secondNumber;\n    case 'subtract':\n      return firstNumber - secondNumber;\n    case 'multiply':\n      return firstNumber * secondNumber;\n    case 'divide':\n      if (secondNumber === 0) {\n        throw new Error('Cannot divide by zero');\n      }\n      return firstNumber / secondNumber;\n    default:\n      throw new Error('Unsupported operator');\n  }\n}\n\nfunction readNumber(inputId) {\n  const value = document.getElementById(inputId).value;\n\n  if (value === '') {\n    throw new Error('Please enter both numbers');\n  }\n\n  const number = Number(value);\n\n  if (Number.isNaN(number)) {\n    throw new Error('Please enter valid numbers');\n  }\n\n  return number;\n}\n\nfunction showResult(result) {\n  document.getElementById('result').textContent = 'Result: ' + result;\n  document.getElementById('error').textContent = '';\n}\n\nfunction showError(message) {\n  document.getElementById('result').textContent = 'Result: --';\n  document.getElementById('error').textContent = message;\n}\n\nfunction handleCalculate() {\n  try {\n    const firstNumber = readNumber('firstNumber');\n    const secondNumber = readNumber('secondNumber');\n    const operator = document.getElementById('operator').value;\n    const result = calculate(firstNumber, secondNumber, operator);\n\n    showResult(result);\n  } catch (error) {\n    showError(error.message);\n  }\n}\n\nfunction handleClear() {\n  document.getElementById('firstNumber').value = '';\n  document.getElementById('secondNumber').value = '';\n  document.getElementById('operator').value = 'add';\n  document.getElementById('result').textContent = 'Result: --';\n  document.getElementById('error').textContent = '';\n}\n\nif (typeof document !== 'undefined') {\n  document.getElementById('calculateBtn').addEventListener('click', handleCalculate);\n  document.getElementById('clearBtn').addEventListener('click', handleClear);\n}\n\nif (typeof module !== 'undefined') {\n  module.exports = {\n    calculate\n  };\n}\n"
+    },
+    {
+      "path": "src/calculator.css",
+      "content": "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  min-height: 100vh;\n  font-family: Arial, sans-serif;\n  background: #f5f5f5;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.calculator {\n  width: 360px;\n  padding: 24px;\n  background: #ffffff;\n  border-radius: 12px;\n  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);\n}\n\nh1 {\n  margin-top: 0;\n  text-align: center;\n}\n\nlabel {\n  display: block;\n  margin-top: 12px;\n  font-weight: 600;\n}\n\ninput,\nselect,\nbutton {\n  width: 100%;\n  margin-top: 6px;\n  padding: 10px;\n  font-size: 16px;\n}\n\n.actions {\n  display: flex;\n  gap: 10px;\n  margin-top: 16px;\n}\n\n.actions button {\n  width: 50%;\n  cursor: pointer;\n}\n\n.result-panel {\n  margin-top: 16px;\n  padding: 12px;\n  background: #f0f0f0;\n  border-radius: 8px;\n}\n\n.error {\n  color: #c00000;\n  min-height: 20px;\n}\n"
+    },
+    {
+      "path": "tests/calculator.test.js",
+      "content": "const { calculate } = require('../src/calculator');\n\nfunction assertEqual(actual, expected, message) {\n  if (actual !== expected) {\n    throw new Error(message + '. Expected ' + expected + ', got ' + actual);\n  }\n}\n\nfunction assertThrows(fn, expectedMessage, message) {\n  try {\n    fn();\n  } catch (error) {\n    if (error.message !== expectedMessage) {\n      throw new Error(message + '. Expected error message \"' + expectedMessage + '\", got \"' + error.message + '\"');\n    }\n    return;\n  }\n\n  throw new Error(message + '. Expected function to throw');\n}\n\nassertEqual(calculate(1, 2, 'add'), 3, 'addition should work');\nassertEqual(calculate(5, 3, 'subtract'), 2, 'subtraction should work');\nassertEqual(calculate(4, 3, 'multiply'), 12, 'multiplication should work');\nassertEqual(calculate(8, 2, 'divide'), 4, 'division should work');\n\nassertThrows(\n  function () {\n    calculate(8, 0, 'divide');\n  },\n  'Cannot divide by zero',\n  'divide by zero should throw'\n);\n\nconsole.log('calculator tests passed');\n"
+    },
+    {
+      "path": "package.json",
+      "content": "{\n  \"scripts\": {\n    \"test\": \"node tests/calculator.test.js\"\n  },\n  \"devDependencies\": {}\n}\n"
+    },
+    {
+      "path": "README-calculator.md",
+      "content": "# Simple Calculator\n\nThis is a minimal frontend calculator module.\n\n## Features\n\n- Addition\n- Subtraction\n- Multiplication\n- Division\n- Clear/reset\n- Divide-by-zero validation\n\n## Run\n\nOpen index.html in a browser.\n\n## Test\n\nRun:\n\nnpm test\n\n## Scope\n\nThis MVP does not include backend APIs, database storage, history, or scientific calculator features.\n"
+    }
+  ],
+  "commands": [
+    "npm test"
+  ],
+  "notes": [
+    "This implementation is frontend-only.",
+    "The generated package.json only contains a test script.",
+    "README-calculator.md is used instead of overwriting an existing README.md."
+  ]
+}
